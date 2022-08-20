@@ -1,60 +1,89 @@
-const express = require('express');
+const express =  require('express');
 const app = express();
-const port = process.env.PORT || 3000;
-const middleware = require('./middleware');
-const path = require('path');
-const bodyParser = require('body-parser');
-const db = require('./database');
-var session = require("express-session");
-var cookieParser = require('cookie-parser');
+const path =  require('path');
+const session =  require('express-session');
+const passport = require('passport');   
+const localStrategy = require('passport-local');   
+const User = require('./models/user');  
+const flash = require('connect-flash');
+const {isLoggedIn} = require('./middleware');
 
-app.set("view engine", "pug");
-app.set("views", "views");
+// Routes 
 
-app.use(bodyParser.urlencoded({extended: false}));
-// serving the public folder
-app.use(express.static(path.join(__dirname, "public")));
+const authRoutes = require('./routes/authRoutes');
+const profileRoutes = require('./routes/profile');
 
-app.use(session({
-    secret: "asf5467dnma23n#kz@cnj2gaskj3cln",
-    resave: true,
-    saveUninitialized: false
-
-}))
-
-// Routes
-const loginRoute = require('./routes/loginRoutes');
-const registerRoute = require('./routes/registerRoutes');
-const logoutRoute = require('./routes/logoutRoutes');
-const postRoute = require('./routes/postRoutes');
-const profileRoute = require('./routes/profileRoutes');
+// APIs
+const postsApiRoute = require('./routes/api/posts');
 
 
-// API routes
-const postApiRoute = require('./routes/api/posts');
-
-app.use('/login', loginRoute);
-app.use('/register', registerRoute);
-app.use('/logout', logoutRoute);
-app.use('/posts', middleware.requireLogin, postRoute);
-app.use('/profile', profileRoute);
-
-
-app.use('/api/posts', postApiRoute);
-
-
-app.get("/", middleware.requireLogin, (req, res, next)=>{
-
-    var payload = {
-        pageTitle: "Home",
-        userLoggedIn: req.session.user,
-        userLoggedInJs: JSON.stringify(req.session.user),
-    }
-
-    res.status(200).render("home", payload);
+const mongoose = require('mongoose');
+const { ppid } = require('process');
+mongoose.connect('mongodb://localhost:27017/twitter')
+.then(()=>{
+    console.log("db connected");
+})
+.catch((err)=>{
+    console.log(err);
 })
 
 
-const server = app.listen(port, ()=> {
-    console.log(`Server Listening at http://localhost:${port}`)
+
+app.set('view engine' , 'ejs');
+app.set('views' , path.join(__dirname,'/views'));
+app.use(express.static(path.join(__dirname , '/public')));
+app.use(express.urlencoded({ extended: true })) // to see req.body data in case of signup form
+app.use(express.json());
+
+app.use(session({
+    secret: 'we need a better secret',
+    resave: false,
+    saveUninitialized: true,
+    // cookie: { secure: true }
+  }))
+
+  //using flash
+  app.use(flash());
+
+  //using session for using sesison 
+  app.use(passport.session());
+  //using initialising for using passport 
+  app.use(passport.initialize());
+
+  passport.use(new localStrategy(User.authenticate()));
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
+
+
+
+// Using routes
+app.use(authRoutes);
+app.use(profileRoutes);
+
+// Using APIs
+
+app.use(postsApiRoute);
+
+
+
+// app.get('/',(req,res)=>{
+//     // res.send("welcome to twitter clone");
+//     if(!req.isAuthenticated()){
+//         return res.redirect('/login');
+//     }
+//     else{
+//         res.render('home');
+//     }
+// })
+app.get('/',isLoggedIn,(req,res)=>{
+    
+        // res.render('home'); //chnaged now
+        res.render('home');
+})
+
+
+
+
+app.listen(3000,()=>{
+    console.log("server running on 3000");
 })

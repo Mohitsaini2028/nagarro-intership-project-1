@@ -1,9 +1,10 @@
-exports.requireLogin = (req, res, next) => {
-
-    if(req.session && req.session.user){
-        return next();
-    }
-    else{
+const isLoggedIn = (req,res,next)=>{
+    if(!req.isAuthenticated()){
         return res.redirect('/login');
     }
+    next();
+}
+
+module.exports = {
+    isLoggedIn
 }

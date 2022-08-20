@@ -1,0 +1,391 @@
+:root{
+    --blue: #1FA2F1;
+    --buttonHoverBg: #d4edff;
+    --blueBackground: rgba(212, 237, 255, 0.6);
+    --lightGrey: rgb(230, 236, 240);
+    --spacing: 15px;
+    --blueLight: #9BD1F9;
+    --greyText: rgb(101,119,134);
+    --greyButtonText: rgba(0, 0, 0, 0.34);
+    --red: rgb(226, 34, 94);
+    --green: rgb(23, 191, 99);
+    --greenBackground: rgba(23, 191, 99, 0.1);
+    --redBackground: rgba(226, 34, 94, 0.1);
+}
+
+*{
+    outline: none !important;
+}
+
+a{
+    color:inherit;
+}
+
+nav{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 100%;
+}
+
+nav a{
+    font-size: 25px;
+    padding: 10px;
+    width: 55px;
+    height: 55px;
+    display: flex;                /* so the icons be on line */
+    align-items: center;
+    justify-content: center;
+    color: #212529;
+    
+}
+
+a:hover{
+    color: inherit;
+    text-decoration: none;
+
+}
+
+h1{
+    font-size: 19px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.mainSectionContainer{
+    /* background-color: rgb(165, 142, 42); */
+    padding: 0px;
+    border-left: 1px solid var(--lightGrey);
+    border-right: 1px solid var(--lightGrey);
+    display: flex;
+    flex-direction: column;
+}
+
+.titleContainer{
+    height: 53px;
+    padding: 0 var(--spacing);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--lightGrey);
+    flex-shrink:0;
+}
+
+.titleContainer h1{
+    flex: 1;
+}
+
+nav a .blue{
+    color: var(--blue);
+}
+
+nav a:hover{
+    background-color: var(--buttonHoverBg);
+    color: var(--blue);
+    border-radius: 50%;
+}
+
+button{
+    background-color: transparent;
+    border: none;
+    color: var(--greyButtonText);
+}
+
+button i,
+button span{
+    pointer-events: none;
+}
+
+.postFormContainer{
+    display: flex;
+    padding: var(--spacing);
+    border-bottom: 10px solid var(--lightGrey);
+    flex-shrink: 0;
+
+
+}
+
+.modal .postFormContainer{
+    border: none;
+    padding: 0;
+    padding-top: var(--spacing);
+}
+
+.modal .post{
+    padding: 0;
+    padding-bottom: var(--spacing);
+}
+
+.userImageContainer{
+    width: 50px;
+    height: 50px;
+}
+
+.userImageContainer img{
+    width: 100%;
+    border-radius: 50%;
+    background-color: #fff;
+    /* background-color: black; */   
+}
+
+.textareaContainer{
+    flex: 1;
+    padding-left: var(--spacing);
+}
+
+.textareaContainer textarea{
+    width: 100%;
+    border: none;
+    resize: none;
+    font-size: 19px;
+}
+
+#submitPostButton{
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 7px 15px;
+}
+
+#submitPostButton:disabled{
+    background-color: var(--blueLight);
+}
+
+#verified{
+    fill: var(--blue);
+}
+
+.r-og9te1 {
+    max-width: 20px;
+}
+.r-f9ja8p {
+    max-height: 20px;
+}
+.r-1cvl2hr {
+    color: rgb(29, 155, 240);
+}
+
+.link{
+    color:var(--blue);
+ }
+ .link:hover{
+    cursor: pointer;
+    text-decoration: underline;
+ }
+
+
+.post{
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing);
+    cursor: pointer;
+    border-bottom: 1px solid var(--lightGrey);
+    flex-shrink: 0;
+}
+
+.mainContentContainer{
+    flex: 1;
+    display: flex;
+}
+
+.postContentContainer{
+    padding-left: var(--spacing);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.username,
+.date{
+    color: var(--greyText);
+}
+
+.displayName{
+    font-weight: bold;
+}
+
+.postFooter{
+    display: flex;
+    align-items: center;
+}
+
+.postFooter .postButtonContainer{
+    flex: 1;      /* takes all the available width */
+    display: flex;
+}
+
+.postFooter .postButtonContainer button{
+    padding: 2px 5px;
+}
+
+.header a:hover{
+    text-decoration: underline;
+}
+
+.header a,
+.header span{
+    padding-right: 5px;
+}
+
+.postButtonContainer button:hover{
+    background-color: #d4edff;
+    color: var(--blue);
+    border-radius: 50%;
+}
+
+.postButtonContainer.red button.active{
+    color: var(--red);
+}
+
+.postButtonContainer.green button.active{
+    color: var(--green);
+}
+
+.postButtonContainer.red button.active:hover{
+    color: var(--red);
+    background-color: var(--redBackground);
+}
+
+.postButtonContainer.green button.active:hover{
+    color: var(--green);
+    background-color: var(--greenBackground);
+}
+
+.postActionContainer{
+    padding-left: 35px;
+    font-size: 13px;
+    color: var(--greyText);
+    margin-bottom: 5px;    
+}
+
+.replyFlag{
+    margin-bottom: 5px;
+}
+
+.replyFlag a{
+    color: var(--blue);
+}
+
+.post.largeFont .postBody,
+.post.largeFont .postFotter
+{
+    font-size: 23px;
+
+}
+
+.postContentContainer .header{
+    display: flex;
+}
+
+.postContentContainer .header .date{
+    flex: 1;
+}
+
+.errorMessage{
+    padding: var(--spacing);
+}
+
+.coverPhotoContainer{
+    height: 180px;
+    background-color: var(--blue);
+    position: relative;
+}
+
+.profileHeaderContainer .userImageContainer{
+    height: 132px;
+    width: 132px;
+    margin-left: var(--spacing);
+    position: absolute;
+    bottom: -66px;
+}
+
+.profileHeaderContainer .userImageContainer img{
+    border: 4px solid #fff;
+}
+
+
+
+.profileHeaderContainer .profileButtonsContainer{
+    text-align: right;
+    padding: var(--spacing);
+    min-height: 66px;
+}
+
+.profileButton,
+.followButton{
+    border: 1px solid var(--blue);
+    font-weight: bold;
+    color: var(--blue);
+    padding: 5px 15px;
+    /* border-radius: inherit; */
+    border-radius: 24px;
+    display: inline-block;
+    margin-left: var(--spacing);
+}
+
+.profileButton:hover,
+.followButton:hover{
+    background-color: var(--blueBackground);
+    color: var(--blue);
+    
+}
+
+.followButton.following{
+    background-color: var(--blue);
+    color: #fff;
+
+}
+
+.followButton.following:hover{
+    background-color: var(--blueBackground);
+    color: var(--blue);
+}
+
+.userHeaderContainer .userDetailsContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--spacing);
+}
+
+.followersContainer .value {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.followersContainer span:not(.value){
+    color: var(--greyText);
+}
+
+.followersContainer a {
+    margin-right: 15px;
+}
+
+.followersContainer a:hover{
+    border-bottom: 1px solid #000;
+}
+
+.tabsContainer {
+    display: flex;
+    border-bottom: 1px solid var(--lightGrey);
+    flex-shrink: 0;
+}
+
+.tab {
+    flex: 1;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--greyText);
+    font-weight: bold;
+}
+
+.tab.active{
+    color: var(--b);
+    border-bottom: 2px solid var(--blue);
+}
+
+.tab:hover{
+    color: var(--blue);
+    background-color: var(--blueBackground);
+}

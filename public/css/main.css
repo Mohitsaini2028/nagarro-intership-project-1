@@ -352,6 +352,15 @@ h1 {
   list-style: none;
 }
 
+#all-msg-container .currentuser{
+  color: var(--lightGrey);
+  background-color: var(--blue);
+}
+
+#all-msg-container .otheruser{
+  color: var(--lightGrey);
+  background-color: var(--greyText);
+}
 
 #verified{
   fill: var(--blue);

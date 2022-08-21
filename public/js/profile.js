@@ -1,23 +1,18 @@
-$(document).ready(() => {
-    if(selectedTab === "replies"){
-        loadReplies();
-    }
-    else{
-        console.log("Prpflfbd")
-        loadPosts();
-    }
-});
 
-function loadPosts(){
-     console.log("SELECTED TAB",selectedTab);
-    $.get("/api/posts", { postedBy: profileUserId , isReply: false },(results)=>{    
-        outputPosts(results, $(".postsContainer"));  
-    })
-}
+$(document).ready(()=>{
+    loadPosts();
+})
 
-function loadReplies(){
-    console.log("SELECTED TAB",selectedTab);
-   $.get("/api/posts", { postedBy: profileUserId , isReply: true },(results)=>{    
-       outputPosts(results, $(".postsContainer"));  
-   })
+async function loadPosts(){
+ const posts = await axios.get('/api/post',{
+    params:{postedBy:profileUserId},
+ });
+
+//copied from common.js
+ for (let post of posts.data) {
+    
+    const html = createPostHtml(post);
+    $(".userPostsContainer").prepend(html);
+  }
+
 }

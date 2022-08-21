@@ -1,25 +1,29 @@
-const express =  require('express');
+const express = require("express");
 const app = express();
-const path =  require('path');
-const session =  require('express-session');
-const passport = require('passport');   
-const localStrategy = require('passport-local');   
-const User = require('./models/user');  
-const flash = require('connect-flash');
-const {isLoggedIn} = require('./middleware');
+const path = require("path");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
+const flash = require("connect-flash");
+const {isLoggedIn} = require('./middleware')
 
-// Routes 
+const port = process.env.PORT || 3000;
+require('dotenv').config()
 
-const authRoutes = require('./routes/authRoutes');
-const profileRoutes = require('./routes/profile');
+//chatting app
+const http = require('http');
+const server = http.createServer(app);
+const socketio = require("socket.io");
+const io = socketio(server);
+const Chat = require('./models/chat')
 
-// APIs
-const postsApiRoute = require('./routes/api/posts');
+
+const DATABASE_URL = process.env.DATABASE_URL || `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@twitter-clone.5itd4no.mongodb.net/?retryWrites=true&w=majority`;
 
 
-const mongoose = require('mongoose');
-const { ppid } = require('process');
-mongoose.connect('mongodb://localhost:27017/twitter')
+mongoose.connect(DATABASE_URL)
 .then(()=>{
     console.log("db connected");
 })
@@ -27,63 +31,79 @@ mongoose.connect('mongodb://localhost:27017/twitter')
     console.log(err);
 })
 
-
-
-app.set('view engine' , 'ejs');
-app.set('views' , path.join(__dirname,'/views'));
-app.use(express.static(path.join(__dirname , '/public')));
-app.use(express.urlencoded({ extended: true })) // to see req.body data in case of signup form
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
+app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(session({
-    secret: 'we need a better secret',
+// Routes
+
+const authRoutes = require("./routes/auth");
+const profileRoutes = require("./routes/profileRoutes");
+const chatRoutes = require("./routes/chatRoute");
+
+// APIs
+
+const postApiRoute = require("./routes/api/posts");
+const { accessSync } = require("fs");
+
+app.use(
+  session({
+    secret: "weneedasomebettersecret",
     resave: false,
     saveUninitialized: true,
-    // cookie: { secure: true }
-  }))
+  })
+);
 
-  //using flash
-  app.use(flash());
+app.use(flash());
 
-  //using session for using sesison 
-  app.use(passport.session());
-  //using initialising for using passport 
-  app.use(passport.initialize());
+app.use(passport.initialize());
+app.use(passport.session());
 
-  passport.use(new localStrategy(User.authenticate()));
-  passport.serializeUser(User.serializeUser());
-  passport.deserializeUser(User.deserializeUser());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currentUser = req.user;
+  next();
+});
 
+app.get("/", isLoggedIn, (req, res) => {
+  res.render("home");
+});
 
-// Using routes
+// Routes
 app.use(authRoutes);
 app.use(profileRoutes);
-
-// Using APIs
-
-app.use(postsApiRoute);
+app.use(chatRoutes);
 
 
 
-// app.get('/',(req,res)=>{
-//     // res.send("welcome to twitter clone");
-//     if(!req.isAuthenticated()){
-//         return res.redirect('/login');
-//     }
-//     else{
-//         res.render('home');
-//     }
-// })
-app.get('/',isLoggedIn,(req,res)=>{
-    
-        // res.render('home'); //chnaged now
-        res.render('home');
+// APIs
+
+app.use(postApiRoute);
+
+
+//connnection
+io.on("connection",(socket)=>{
+  console.log("connection established")
+
+  socket.on("send-msg" , async(data)=>{
+    io.emit("recived-msg",{
+      msg:data.msg,
+      user:data.user,
+      createdAt: new Date(),
+    });
+    await Chat.create({content:data.msg , user: data.user})
+  })
 })
 
 
 
-
-app.listen(3000,()=>{
-    console.log("server running on 3000");
-})
+server.listen(port, () => {
+  console.log(`Server running at port ${port}`);
+});

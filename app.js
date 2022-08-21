@@ -20,7 +20,7 @@ const io = socketio(server);
 const Chat = require('./models/chat')
 
 
-const DATABASE_URL = process.env.DATABASE_URL || `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@twitter-clone.5itd4no.mongodb.net/?retryWrites=true&w=majority`;
+const DATABASE_URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@twitter-clone.5itd4no.mongodb.net/?retryWrites=true&w=majority`;
 
 
 mongoose.connect(DATABASE_URL)

@@ -39,6 +39,7 @@ router.post('/login', passport.authenticate('local',
         failureFlash:true
     }), async (req, res) => {
     
+    res.locals.currentUser = req.user;
     res.redirect('/');
 })
 

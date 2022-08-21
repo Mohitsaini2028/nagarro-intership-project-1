@@ -11,21 +11,20 @@
             <div class="mainSectionContainer col-10 col-md-8 col-lg-6">
                 <div class="titleContainer">
                     <h1><%=payload.user.firstName%></h1>
-                    </div>
+                </div>
                 <!-- add here   -->
 
                 <script>
                     var profileUserId = '<%=payload.user._id%>'
                 </script>
                
-                
                 <div class="profileHeaderContainer">
                     <div class="coverPhotoSection">
                         <div class="coverPhotoContainer">
                            
                         </div>
                         <div class="userImageContainer">
-                            <img src="/images/profilePic.jpeg" alt="User profile image">
+                            <img src="<%= payload.user.profilePic %>" alt="User profile image">
                            
                         </div>
                     </div>

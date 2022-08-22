@@ -3,7 +3,6 @@ async function refreshPosts() {
   const posts = await axios.get("/api/post");
 
   for (let post of posts.data) {
-    console.log(post);
     const html = createPostHtml(post);
     $(".postsContainer").prepend(html);
   }

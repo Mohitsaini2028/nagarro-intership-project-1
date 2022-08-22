@@ -7,7 +7,10 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const flash = require("connect-flash");
-const {isLoggedIn} = require('./middleware')
+const {isLoggedIn} = require('./middleware');
+var favicon = require('serve-favicon');
+
+app.use(favicon(path.join(__dirname, '/public', 'twitter_favicon.ico')));
 
 const port = process.env.PORT || 3000;
 require('dotenv').config()

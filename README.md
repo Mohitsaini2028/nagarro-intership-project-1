@@ -22,6 +22,4 @@ A clone of twitter developed in node.js with data updation through API.
 ![chrome_jw1sfx6anR](https://user-images.githubusercontent.com/66358041/182676160-84ba15fb-e3c9-4f8b-b7ad-5b71017c771d.png)
 
 ## `User Profile`
-Posts section | Replies section
-:-------------------------:|:-------------------------:|
-![](https://user-images.githubusercontent.com/66358041/182676024-373cc55a-e3e6-4c2f-87b3-243d98fb632c.png) | ![](https://user-images.githubusercontent.com/66358041/182676167-925457af-be03-4172-bcc1-b9609475b831.png)
+![](https://user-images.githubusercontent.com/66358041/182676024-373cc55a-e3e6-4c2f-87b3-243d98fb632c.png) 

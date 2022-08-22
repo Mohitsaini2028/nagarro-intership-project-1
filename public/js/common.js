@@ -39,6 +39,7 @@ $("#submitReplyButton").click(async (event) => {
     replyTo: replyTo,
   });
 
+  location.reload();
 });
 
 $("#replyModal").on("show.bs.modal", async (event) => {
@@ -141,7 +142,7 @@ function createPostHtml(postData) {
                             <div class='postButtonContainer red'>
                                 <button class='likeButton'>
                                     <i class='far fa-heart'></i>
-                                    <span>${postData.likes.length}</span>
+                                    <span>${postData.likes.length || ""}</span>
                                 </button>
                             </div>
                         </div>

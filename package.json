@@ -8,7 +8,7 @@
     "dev": "nodemon ./app.js",
     "start": "node app.js"
   },
-  "author": "Sabeel Khan",
+  "author": "Mohit Saini",
   "license": "ISC",
   "dependencies": {
     "connect-flash": "^0.1.1",

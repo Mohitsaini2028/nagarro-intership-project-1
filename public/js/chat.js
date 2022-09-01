@@ -52,13 +52,12 @@ $('#send-msg-btn').click(()=>{
 
 socket.on("recived-msg" , (data)=>{
 
-    var curstamp = timeDifference(new Date(), new Date(msg.createdAt));
-
+    var curstamp = timeDifference(new Date(), new Date(data.createdAt));
     $('#all-msg-container').append(
         `<li class="my-4 p-2 rounded otheruser">
-        <span>${msg.user}<span>
+        <span>${data.user}<span>
         <span class="time">${curstamp} <span>
-        <p>${msg.content}</p>
+        <p>${data.msg}</p>
     </li>`
     )
 })
